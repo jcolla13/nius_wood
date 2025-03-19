@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NIUS - Muebles de Madera a Medida</title>
+  <!-- Cargar Tailwind CSS desde un CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Ocultar el modal por defecto */
+    .nius-modal {
+      display: none;
+    }
+  </style>
+  <!-- 
+    Instrucciones:
+    1. Guarda este archivo como "index.html".
+    2. Asegúrate de tener una carpeta "imagenes" en la misma ubicación que este archivo, con:
+       - "logo-nius.jpg" (logo de NIUS)
+       - "fondo-nius.jpg" (imagen de fondo)
+       - "nius-auxiliares.jpg", "nius-cocinas.jpg", "nius-salon.jpg", "nius-banos.jpg", "nius-librerias.jpg", "nius-mesas.jpg", "nius-armarios.jpg", "nius-dormitorio.jpg" (imágenes para los botones)
+    3. Haz doble clic en este archivo para abrirlo en tu navegador.
+    4. Usa los botones "Agendar llamada" para abrir el modal y programar la llamada. Los datos se guardarán en LocalStorage.
+  -->
+</head>
+<body class="bg-gray-100"
+      style="background-image: url('imagenes/fondo-nius.jpg'); 
+             background-size: cover; 
+             background-position: center; 
+             background-repeat: no-repeat;">
+
+  <!-- Encabezado: Logo y botón de agendar llamada -->
+  <header class="bg-white shadow p-4 flex flex-col md:flex-row md:items-center md:justify-between">
+    <div class="flex flex-col items-start md:flex-row md:items-center">
+      <img 
+        src="imagenes/logo-nius.jpg" 
+        alt="NIUS Logo" 
+        class="mb-2 md:mb-0 md:mr-4"
+      />
+      <h1 class="text-xl font-bold">
+        NIUS - Muebles de Madera a Medida
+      </h1>
+    </div>
+    <div class="mt-4 md:mt-0">
+      <button 
+        id="cta-agendar" 
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Agendar llamada
+      </button>
+    </div>
+  </header>
+
+  <!-- Modal para agendar llamada -->
+  <div id="modal" 
+       class="nius-modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
+       style="display: none;">
+    <div class="bg-white p-6 rounded shadow-lg w-80">
+      <h2 class="text-lg font-bold mb-4">Agendar Llamada</h2>
+      <form id="callForm" class="flex flex-col">
+        <label class="mb-2 block">
+          Nombre:
+          <input type="text" id="name" name="entry.1438799983" class="border rounded w-full p-2 mt-1" required />
+        </label>
+        <label class="mb-2 block">
+          Teléfono:
+          <input type="tel" id="phone" name="entry.578826271" class="border rounded w-full p-2 mt-1" required />
+        </label>
+        <label class="mb-2 block">
+          Localidad:
+          <input type="text" id="locality" name="entry.1524208515" class="border rounded w-full p-2 mt-1" required />
+        </label>
+        <label class="mb-2 block">
+          Provincia:
+          <input type="text" id="province" name="entry.714801936" class="border rounded w-full p-2 mt-1" required />
+        </label>
+        <div class="flex justify-end mt-4">
+          <button type="button" id="cancelBtn" class="mr-2 bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">
+            Cancelar
+          </button>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Agendar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript para enviar datos a Google Forms -->
+  <script>
+    document.getElementById('cta-agendar').addEventListener('click', function() {
+      document.getElementById('modal').style.display = 'flex';
+    });
+
+    document.getElementById('cancelBtn').addEventListener('click', function() {
+      document.getElementById('modal').style.display = 'none';
+    });
+
+    document.getElementById('callForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+
+      // URL de Google Forms (REEMPLAZAR CON TU ENLACE REAL)
+      const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSeYHfJjGwqO96aRW1d0sFgQQibYPk6xF2cZxfgiAJwlZhreag/formResponse";
+
+      fetch(googleFormURL, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      }).then(() => {
+        alert("Llamada agendada correctamente.");
+        form.reset();
+        document.getElementById('modal').style.display = 'none';
+      }).catch(() => {
+        alert("Hubo un error al enviar el formulario.");
+      });
+    });
+  </script>
+</body>
+</html>
+  
+  <!-- Contenido principal -->
+  <main class="p-4">
+    <!-- Grid de 8 botones con enlaces reales -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a href="productos/auxiliares.html" class="bg-white rounded shadow p-4 flex flex-col items-center hover:shadow-lg transition">
+        <img src="imagenes/nius-auxiliares.jpg" alt="Auxiliares" class="w-20 h-20 object-cover rounded-full mb-2" />
+        <span>Auxiliares</span>
+      </a>
+      <a href="productos/cocinas.html" class="bg-white rounded shadow p-4 flex flex-col items-center hover:shadow-lg transition">
+        <img src="imagenes/nius-cocinas.jpg" alt="Cocinas" class="w-20 h-20 object-cover rounded-full mb-2" />
+        <span>Cocinas</span>
+      </a>
+      <a href="productos/salon.html" class="bg-white rounded shadow p-4 flex flex-col items-center hover:shadow-lg transition">
+        <img src="imagenes/nius-salon.jpg" alt="Salón" class="w-20 h-20 object-cover rounded-full mb-2" />
+        <span>Salón</span>
+      </a>
+      <a href="productos/banos.html" class="bg-white rounded shadow p-4 flex flex-col items-center hover:shadow-lg transition">
+        <img src="imagenes/nius-banos.jpg" alt="Baños" class="w-20 h-20 object-cover rounded-full mb-2" />
+        <span>Baños</span>
+      </a>
+      <a href="productos/librerias.html" class="bg-white rounded shadow p-4 flex flex-col items-center hover:shadow-lg transition">
+        <img src="imagenes/nius-librerias.jpg" alt="Librerías" class="w-20 h-20 object-cover rounded-full mb-2" />
+        <span>Librerías</span>
+      </a>
+      <a href="productos/mesas.html" class="bg-white rounded shadow p-4 flex flex-col items-center hover:shadow-lg transition">
+        <img src="imagenes/nius-mesas.jpg" alt="Mesas" class="w-20 h-20 object-cover rounded-full mb-2" />
+        <span>Mesas</span>
+      </a>
+      <a href="productos/armarios.html" class="bg-white rounded shadow p-4 flex flex-col items-center hover:shadow-lg transition">
+        <img src="imagenes/nius-armarios.jpg" alt="Armarios" class="w-20 h-20 object-cover rounded-full mb-2" />
+        <span>Armarios</span>
+      </a>
+      <a href="productos/dormitorio.html" class="bg-white rounded shadow p-4 flex flex-col items-center hover:shadow-lg transition">
+       <img src="imagenes/nius-dormitorio.jpg" alt="Dormitorio" class="w-20 h-20 object-cover rounded-full mb-2" />
+       <span>Dormitorio</span>
+      </a>
+    </div>
+
+
+    <!-- Mensaje después de los botones -->
+    <div class="text-white drop-shadow-md text-center text-xl font-semibold">
+      Trabajamos la madera con nuestras manos
+    </div>
+
+    <!-- Mensaje final invitando a llamar para una visita presencial -->
+    <div class="text-white drop-shadow-md text-center text-lg">
+      ¡Llámanos para una visita presencial!
+    </div>
+
+    <!-- Botón adicional para agendar llamada debajo del mensaje final -->
+    <div class="mt-4 flex justify-center">
+      <button id="cta-agendar-bottom" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Agendar llamada
+      </button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow p-4 mt-8 text-center">
+    <p>El Masnou (Barcelona) | Tel: 625831968</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Función para mostrar el modal
+    function showModal() {
+      const modal = document.getElementById('modal');
+      modal.style.display = 'flex';
+    }
+
+    // Función para ocultar el modal
+    function hideModal() {
+      const modal = document.getElementById('modal');
+      modal.style.display = 'none';
+    }
+
+    // Evento para los botones de agendar llamada (encabezado y parte inferior)
+    document.getElementById('cta-agendar').addEventListener('click', showModal);
+    document.getElementById('cta-agendar-bottom').addEventListener('click', showModal);
+
+    // Evento para el botón cancelar en el modal
+    document.getElementById('cancelBtn').addEventListener('click', hideModal);
+
+    // Manejo del formulario de llamada
+    document.getElementById('callForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const locality = document.getElementById('locality').value;
+      const province = document.getElementById('province').value;
+      // Guardar los detalles de la llamada en LocalStorage
+      localStorage.setItem('callAppointment', JSON.stringify({
+        name: name,
+        phone: phone,
+        locality: locality,
+        province: province,
+        scheduledAt: new Date()
+      }));
+      alert('Llamada agendada. Te contactaremos pronto.');
+      hideModal();
+    });
+
+    // Instrucción en consola para usuarios avanzados
+    console.log('Instrucciones: Abre este archivo HTML con doble clic para usar la aplicación.');
+  </script>
+</body>
+</html>
